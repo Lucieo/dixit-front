@@ -1,58 +1,29 @@
 import React, { useState } from 'react';
 import requireAuth from 'components/requireAuth';
-import {useQuery} from '@apollo/react-hooks';
-import Loading from 'components/Loading';
-import {GET_SKETCHBOOK_DETAILS} from 'graphQL/queries';
-import GameModes from 'components/GameModes';
+import PlayerDeck from 'components/GameViews/PlayerDeck';
+import Table from 'components/GameViews/Table';
+import PointsDisplay from 'components/GameViews/PointsDisplay';
+import AdminControls from 'components/GameViews/AdminControls'
 
 
 
 
 const ActiveGame = ({gameInfo, userId})=>{
     const turn = gameInfo.turn
-    const [pages, setPages] = useState({});
+    const playerPosition = gameInfo.players.map(player=>player.id).indexOf(userId)
+    const isTurnAdmin = (playerPosition === gameInfo.turn)
 
-
-    const getSketchbookId = ()=>{
-        let sketchbookId=""
-        if(gameInfo.players){
-            const playersIds = gameInfo.players.map(player=>player.id)
-            const nextIndex = playersIds.indexOf(userId)+turn
-            const sketchbooksMaxIndexes = gameInfo.sketchbooks.length-1;
-            const newIndex = (nextIndex>sketchbooksMaxIndexes) ? (nextIndex-sketchbooksMaxIndexes-1) : nextIndex
-            sketchbookId = gameInfo.sketchbooks.map(sketchbook=>sketchbook.id)[newIndex]
-        }
-        return sketchbookId
+    const selectGameView = ()=>{
+        if(!gameInfo.turnDeck) return <PlayerDeck gameId={gameInfo.id}/>
+        if(gameInfo.turnDeck && !gameInfo.turnPoints) return <Table gameInfo={gameInfo}/>
+        if(gameInfo.turnDeck && gameInfo.turnPoints) return <PointsDisplay gameInfo={gameInfo}/>
     }
-    const sketchbookId = getSketchbookId();
-
-    const {data, loading, error} =useQuery(
-        GET_SKETCHBOOK_DETAILS,
-        {
-            variables: {
-                sketchbookId
-            },
-            fetchPolicy:'network-only',
-            onCompleted({getSketchbookInfo}){
-                setPages(getSketchbookInfo.pages)
-            },
-            onError(...error) {
-                console.log(error)
-            }
-        }
-    );
-
-    if(loading) return <Loading/>
 
     return(
         <div className="active-game">
-            {
-                <GameModes
-                    pages={pages}
-                    sketchbookId={sketchbookId}
-                    turn={turn}
-                />
-            }
+            <h1>ACTIVE GAME</h1>
+            {isTurnAdmin && <AdminControls gameInfo={gameInfo}/>}
+            {selectGameView()}
         </div>
     )
 }

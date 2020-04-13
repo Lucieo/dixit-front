@@ -1,33 +1,31 @@
 import React from 'react';
 
 const styles ={
-    red:{color:"#F1012C"},
+    red:{color:"#E42343"},
     orange:{color: "#EE6402"},
-    yellow:{color:"#F8AF28"},
-    green:{color: "#69961F"},
-    blue:{color: "#62A6C4"}
+    yellow:{color:"#F7B030"},
+    green:{color: "#1EBE8B"},
+    blue:{color: "#197D9E"}
 }
 
 export default function Sloggan(){
     return(
         <>
-            <span style={styles.red}>H</span>
-            <span style={styles.orange}>e</span>
-            <span style={styles.yellow}>y</span>
-            &nbsp;
-            <span style={styles.green}>O</span>
-            <span style={styles.blue}>h</span>
-            &nbsp;
-            <span style={styles.red}>L</span>
-            <span style={styles.orange}>e</span>
-            <span style={styles.yellow}>t</span>
-            <span style={styles.green}>'s</span>
-            &nbsp;
-            <span style={styles.blue}>D</span>
-            <span style={styles.red}>r</span>
+            <span style={styles.red}>I</span>
+            <span style={styles.orange}>m</span>
+            <span style={styles.yellow}>a</span>
+            <span style={styles.green}>g</span>
+            <span style={styles.blue}>i</span>
+            <span style={styles.red}>n</span>
             <span style={styles.orange}>a</span>
-            <span style={styles.yellow}>w</span>
-            <span style={styles.green}>!</span>
+            <span style={styles.yellow}>a</span>
+            <span style={styles.green}>a</span>
+            <span style={styles.blue}>a</span>
+            <span style={styles.red}>t</span>
+            <span style={styles.orange}>i</span>
+            <span style={styles.yellow}>o</span>
+            <span style={styles.green}>n</span>
+            <span style={styles.blue}>!</span>
         </>
     )
 }

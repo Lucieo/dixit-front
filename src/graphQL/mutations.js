@@ -11,10 +11,9 @@ mutation SignUp($email: String!, $password: String!, $name: String!){
 `;
 
 export const MODIFY_USER = gql`
-mutation ModifyUser($icon: String!, $name: String!, $iconColor: String!){
-    modifyUser(name: $name, icon: $icon, iconColor: $iconColor){
+mutation ModifyUser($icon: String!, $name: String!){
+    modifyUser(name: $name, icon: $icon){
         icon,
-        iconColor,
         name
     }
 }
@@ -36,10 +35,10 @@ mutation LeaveGame($gameId: ID!){
   }
 `;
 
-export const SUBMIT_PAGE = gql`
-mutation SubmitPage($sketchbookId: ID!, $gameId: ID!, $content: String!, $pageType: String!){
-    submitPage(sketchbookId: $sketchbookId, gameId: $gameId, content: $content, pageType: $pageType){
-        id
+export const SELECT_CARD = gql`
+mutation SelectCard($gameId:ID!, $cardId:ID!, $actionType:String!){
+    selectCard(gameId:$gameId, cardId:$cardId, actionType:$actionType){
+        status
     }
 }
 `;

@@ -11,7 +11,6 @@ import {LEAVE_GAME} from 'graphQL/mutations';
 import {GAME_UPDATE} from 'graphQL/subscriptions';
 import NothingToSee from 'components/NothingToSee';
 import OnGoingGame from './OnGoingGame';
-import SummerNight from 'components/SummerNight';
 
 
 const Game = (props)=>{
@@ -19,7 +18,7 @@ const Game = (props)=>{
     const [gameInfo, setGameInfo] = useState({})
     const user = useQuery(GET_USER_ID).data
     const userId = user && user.userId
-        const [leaveGame, test] = useMutation(LEAVE_GAME, 
+        const [leaveGame] = useMutation(LEAVE_GAME, 
             {
             variables:{gameId}, 
             refetchQueries: [{
@@ -30,8 +29,6 @@ const Game = (props)=>{
                 console.log(error)
             }
     })
-
-    console.log(test)
 
 
     const { data, loading, error } = useQuery(
@@ -70,7 +67,6 @@ const Game = (props)=>{
     if(loading) return <Loading/>
 
     const selectGameStatus = ({status})=>{
-        console.log(status)
         if(status==="new"){
             return <NewGame 
             gameId={gameId} 
@@ -100,7 +96,6 @@ const Game = (props)=>{
 
     return(
         <div className="game-main">
-            <SummerNight/>
             <div className="container game-main__container">
                 {gameInfo && selectGameStatus(gameInfo)}
             </div>

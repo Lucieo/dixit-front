@@ -7,23 +7,9 @@ export const CURRENT_USER = gql`
         name
         email
         icon
-        iconColor
     }
   }
 `;
-
-export const LAST_GAMES = gql`
-{
-    getLastUserGames{
-        id
-        sketchbooks{
-          pages{
-            content
-          }
-        }
-    }
-}
-`
 
 export const GET_USER_ID = gql`
 {
@@ -41,37 +27,20 @@ query GetGameInfo($gameId:ID!){
         id
         name
         icon
-        iconColor
       }
       creator
-      sketchbooks{
-        id
-      }
     }
   }
 `
 
-export const GET_ALL_SKETCHBOOKS = gql`
-query GetAllSketchbooks($gameId: ID!){
-    getAllSketchbooks(gameId:$gameId){
-        pages{
-            content
-            pageType
-            creator{
-                name
-            }
-        }
-    }
+export const GET_DECK= gql`
+query GetDeck($gameId:ID!){
+    getDeck(gameId:$gameId){
+      cards{
+        id
+        fileName
+      }
+  }
 }
-`;
+`
 
-export const GET_SKETCHBOOK_DETAILS = gql`
-query GetSketchbookInfo($sketchbookId: ID!){
-    getSketchbookInfo(sketchbookId:$sketchbookId){
-        pages{
-            content
-            pageType
-        }
-    }
-}
-`;

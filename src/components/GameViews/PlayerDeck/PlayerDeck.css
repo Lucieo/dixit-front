@@ -1,0 +1,39 @@
+.playerDeck{
+    min-height: 800px;
+}
+
+.playerCard img{
+    height: 350px;
+}
+
+.playerCard{
+    cursor: pointer;
+    height: 350px;
+    background-size: cover!important;
+    background-position: center!important;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+    transition: all .2s ease-in-out;
+}
+
+.playerCard.selected{
+    border: 4px solid #fbc02d;
+}
+
+.playerCard__wrapper{
+    padding: 10px!important;
+}
+
+.playerCard:hover{
+    transform: scale(1.5);
+}
+
+.zoom-card{
+    margin: 0 auto;
+    width: 380px;
+    height: 580px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

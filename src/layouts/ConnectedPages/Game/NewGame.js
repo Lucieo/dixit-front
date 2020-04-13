@@ -43,19 +43,14 @@ const NewGame = ({gameId, playerslist, creatorId})=>{
 
     return(
         <div className="new-game">
-            <h4>Nouvelle partie</h4>
+            <h4>Prêts pour un nouveau Dixit?</h4>
             {isGameAdmin && <AdminGameControls gameId={gameId} players={players}/>}
             {!isGameAdmin && <PlayerControls joinGame={joinGame} loading={loading} players={players} hasJoined={hasJoined}/>}
-            <h5 className="center">La partie commence bientôt profitez-en pour réfléchir à votre premier mot!</h5>
             <div className="row">
                 <div className="new-game__rules col m6 s12">
                 <p className="new-game__rules-title center">Comment ça marche?</p>
-                <p>Une fois que la partie compte au minimum 3 joueurs, le game master peut lancer le jeu.  Vous disposez de :
+                <p>Une fois que la partie compte au minimum 3 joueurs
                 </p>
-                <p>- 1mn au premier tour pour écrire le mot ou la phrase initiale dans le champ texte</p>
-                <p>- 1mn30 au tour suivant pour dessiner le mot qui vous sera donné</p>
-                <p>- 30 secondes au tour suivant pour mettre un mot sur le dessin proposé dans le champs texte</p>
-                <p>La page se met à jour en sauvegardant votre réponse et le chronomètre se lance automatiquement à chaque tour. Vous n'avez rien à faire.</p>
             </div>
                 <div className="col m6 s12 new-game__players">
                     <p className="new-game__players-title">Liste des joueurs connectés à cette partie</p>

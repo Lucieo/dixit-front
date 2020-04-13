@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 
 const Profil = ()=>{
     const [icon, setIcon] = useState('tag_faces');
-    const [iconColor, setIconColor] = useState('black-text');
     const [name, setName] = useState('');
     let history = useHistory();
 
@@ -20,14 +19,13 @@ const Profil = ()=>{
         { fetchPolicy: "network-only", 
             onCompleted(data) {
                 setName(data.currentUser.name)
-                setIcon(data.currentUser.icon || 'tag_faces')
-                setIconColor(data.currentUser.iconColor || 'blue-text')            
+                setIcon(data.currentUser.icon || 'monster1')       
             }
         }
     );
 
     const [modifyUser , {modifyData}] = useMutation(MODIFY_USER, {
-        variables: {name, icon, iconColor},
+        variables: {name, icon},
         onCompleted(response){
             history.push('/')
         },
@@ -43,9 +41,7 @@ const Profil = ()=>{
         <div className="container profile">
             <div className="row">
                 <div className="col s6 center">
-                    <i className={`material-icons large ${iconColor}`}
-                    style={{color:iconColor}}
-                    >{icon}</i>
+                <img src={`../images/players/${icon}.png`} alt="avatar" style={{width:100}}/>
                 </div>
                 <div className="col s6">
                     <h4>Mon Profil</h4>
@@ -61,10 +57,6 @@ const Profil = ()=>{
                     <IconSelector
                         setIcon={setIcon}
                         selectedIcon={icon}
-                    />
-                    <p>Couleur</p>
-                    <CirclePicker
-                        onChange={ (color, event)=>setIconColor((color.hex))}
                     />
                 </div>
                 <div className="center profil__save-btn">

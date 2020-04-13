@@ -6,7 +6,7 @@ import Loading from 'components/Loading';
 import CreateGame from 'components/GameControls/CreateGame';
 import {Link} from 'react-router-dom';
 import requireAuth from 'components/requireAuth';
-import LastGames from 'components/LastGames';
+import Frame from 'images/frame.svg';
 
 function Home(){
     const client = useApolloClient();
@@ -25,7 +25,9 @@ function Home(){
 
     return(
         <div className="center connected-home">
-            <i className="material-icons large connected-home__icon" style={{color: user.iconColor, borderColor: user.iconColor}}>{user.icon}</i>
+            <div className="connected-home__avatar" style={{background:`url(${Frame})`}}>
+                <img src={`../images/players/${user.icon}.png`} alt="avatar" style={{width:100}}/>
+            </div>
             <h5>Bienvenue</h5>
             <h4>{user.name}</h4>
             <p>Profil</p>
@@ -33,7 +35,6 @@ function Home(){
                 Modifier Mon profil
             </Link>
             <CreateGame/>
-            <LastGames/>
         </div>
     )
 }

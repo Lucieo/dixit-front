@@ -6,6 +6,7 @@ import requireAuth from 'components/requireAuth';
 import {CURRENT_USER} from 'graphQL/queries';
 import {useQuery} from '@apollo/react-hooks';
 import {useHistory} from 'react-router-dom';
+import {ReactComponent as Logo} from 'images/idea.svg';
 
 
 
@@ -22,8 +23,8 @@ export default requireAuth(function Header(){
             <nav>
             <div className="nav-wrapper">
                 <Link to="/" className="brand-logo left">
-                    <span className="nav__title">Esquisse Live</span>
-                    <i className="material-icons">brush</i>
+                    <span className="nav__title">Dixit Live</span>
+                    <Logo className="brand-logo__img"/>
                  </Link>
                 <ul className="right nav__right-menu">
                     <LogoutButton/>

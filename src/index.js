@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AuthPage from 'layouts/AuthPage';
 import ConnectedPages from 'layouts/ConnectedPages';
+import './Main.css';
 
 
 function IsLoggedIn() {

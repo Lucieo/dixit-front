@@ -10,10 +10,6 @@ subscription GameUpdate($gameId:ID!){
         id
         name
         icon
-        iconColor
-      }
-      sketchbooks{
-        id
       }
     }
   }
@@ -26,7 +22,6 @@ subscription PlayerUpdate($gameId: ID!) {
           id
           name
           icon
-          iconColor
       }
       creator
   }

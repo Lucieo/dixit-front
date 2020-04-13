@@ -1,6 +1,6 @@
 import React,  {useState} from 'react';
-import CrayonsBG from 'images/crayons.jpeg';
-import {ReactComponent as Logo} from 'images/pencil.svg';
+import Bg from 'images/paintings.jpeg';
+import {ReactComponent as Logo} from 'images/idea.svg';
 import './AuthPage.css';
 import Login from 'layouts/AuthPage/Login';
 import SignUp from 'layouts/AuthPage/Signup';
@@ -27,9 +27,9 @@ export default function BasicHome(){
     const [mode, setMode] = useState('login');
     return(
         <ApolloProvider client={client}>
-            <div className="auth-page" style={{background: `url(${CrayonsBG})`}}>
+            <div className="auth-page" style={{background: `url(${Bg})`}}>
                 <Logo className="auth-page__logo"/>
-                <h3 className='auth-page__title'>Esquisse Live</h3>
+                <h3 className='auth-page__title'>Dixit Live</h3>
                 <div className="auth-page__action">
                     <h5 className="center">
                         <Sloggan/>

@@ -26,7 +26,7 @@ export default function AdminGameControls({gameId, players}){
                 </div>
                 <div>
                 {
-                    players.length>2
+                    players.length>0
                     ? <><p>Prêts à commencer?</p><button className="btn" onClick={()=>launchGame()}>LANCER LE JEU</button></>
                     : <p>Un minimum de 3 joueurs est nécessaire pour lancer le jeu.</p>
                 }
