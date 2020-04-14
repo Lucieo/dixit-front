@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Table({gameInfo}){
+export default function VotePhase(){
     return(
         <div>
-           Table
+            SEEING PLAYERS VOTES
         </div>
     )
 }

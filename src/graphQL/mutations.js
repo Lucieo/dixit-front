@@ -52,3 +52,11 @@ mutation ChangeGameStatus($newStatus:String!, $gameId: ID!){
   }
 `;
 
+export const INIT_GAME = gql`
+mutation InitGame($gameId:ID!, $currentWord:String!, $cardId:ID!){
+    initGame(gameId:$gameId, currentWord: $currentWord, cardId: $cardId){
+        status
+    }
+}
+`
+

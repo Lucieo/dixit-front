@@ -1,39 +1,40 @@
-.playerDeck{
-    min-height: 800px;
-}
-
 .playerCard img{
     height: 350px;
 }
 
 .playerCard{
-    cursor: pointer;
-    height: 350px;
+    height: 300px;
+    width: 200px;
     background-size: cover!important;
     background-position: center!important;
     border-radius: 5px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
     transition: all .2s ease-in-out;
+    margin: 0 auto;
+}
+
+.playerCard.ownCard{
+    opacity: 0.5;
 }
 
 .playerCard.selected{
     border: 4px solid #fbc02d;
 }
 
+.playerCard.voted{
+    border: 4px solid rgb(10, 90, 10);
+}
+
 .playerCard__wrapper{
     padding: 10px!important;
-}
-
-.playerCard:hover{
-    transform: scale(1.5);
-}
-
-.zoom-card{
     margin: 0 auto;
-    width: 380px;
-    height: 580px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.playerCard.canHover{
+    cursor: pointer;
+}
+
+.playerCard.canHover:hover{
+    transform: scale(1.5);
+    content: "PAS VOTRE IMAGE"
 }

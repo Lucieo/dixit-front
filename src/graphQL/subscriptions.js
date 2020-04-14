@@ -11,6 +11,7 @@ subscription GameUpdate($gameId:ID!){
         name
         icon
       }
+      currentWord
     }
   }
 `

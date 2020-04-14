@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import requireAuth from 'components/requireAuth';
-import PlayerDeck from 'components/GameViews/PlayerDeck';
-import Table from 'components/GameViews/Table';
-import PointsDisplay from 'components/GameViews/PointsDisplay';
-import AdminControls from 'components/GameViews/AdminControls'
+import AdminViews from 'components/AdminViews';
+import PlayerViews from 'components/PlayerViews';
 
 
 
 
 const ActiveGame = ({gameInfo, userId})=>{
-    const turn = gameInfo.turn
-    const playerPosition = gameInfo.players.map(player=>player.id).indexOf(userId)
-    const isTurnAdmin = (playerPosition === gameInfo.turn)
+    const {players, turnDeck, turnPoints, turn, currentWord} = gameInfo
+    const playerPosition = players.map(player=>player.id).indexOf(userId)
+    const isTurnAdmin = (playerPosition === turn)
 
-    const selectGameView = ()=>{
-        if(!gameInfo.turnDeck) return <PlayerDeck gameId={gameInfo.id}/>
-        if(gameInfo.turnDeck && !gameInfo.turnPoints) return <Table gameInfo={gameInfo}/>
-        if(gameInfo.turnDeck && gameInfo.turnPoints) return <PointsDisplay gameInfo={gameInfo}/>
+    const getGameMode=()=>{
+        if(!currentWord) return 'init'
+        if(turnDeck.length!==players.length) return "select"
+        if((turnDeck.length===players.length) && !turnPoints) return "vote"
+        if(turnDeck && turnPoints) return "showPoints"
     }
+    const gameMode = getGameMode()
 
     return(
         <div className="active-game">
             <h1>ACTIVE GAME</h1>
-            {isTurnAdmin && <AdminControls gameInfo={gameInfo}/>}
-            {selectGameView()}
+            {isTurnAdmin 
+            ? <AdminViews gameInfo={gameInfo} gameMode={gameMode} userId={userId}/>
+            : <PlayerViews gameMode={gameMode} gameInfo={gameInfo} userId={userId}/>
+            }
         </div>
     )
 }

@@ -29,6 +29,21 @@ query GetGameInfo($gameId:ID!){
         icon
       }
       creator
+      currentWord
+      turnDeck{
+        owner
+        card{
+          id
+          fileName
+        }
+      }
+      turnVotes{
+        owner
+        card{
+          id
+          fileName
+        }
+      }
     }
   }
 `
