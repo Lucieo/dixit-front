@@ -47,7 +47,7 @@ export default function InitGame({gameInfo, userId}){
         <div className="row">
             <div className="col s6">
                 <h5>Ma carte</h5>
-                {chosenCard && <Card card={chosenCard}/>}
+                {chosenCard && <Card card={chosenCard} fullSize={true}/>}
             </div>
             <div className="col s6">
                 <h5>Mon mot</h5>

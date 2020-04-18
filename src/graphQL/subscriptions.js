@@ -12,6 +12,20 @@ subscription GameUpdate($gameId:ID!){
         icon
       }
       currentWord
+      turnVotes{
+        owner
+        card{
+          id
+          fileName
+        }
+      }
+      turnDeck{
+        owner
+        card{
+          id
+          fileName
+        }
+      }
     }
   }
 `
@@ -29,10 +43,18 @@ subscription PlayerUpdate($gameId: ID!) {
 }
 `;
 
-export const TIME_TO_SUBMIT = gql`
-  subscription TimeToSubmit($gameId: ID!){
-    timeToSubmit(gameId:$gameId){
-      id
+export const GAME_ACTION = gql `
+subscription GameAction($gameId: ID!) {
+  gameAction(gameId:$gameId){
+    gameId,
+    actionType,
+    action{
+      owner
+      card{
+        id
+        fileName
+      }
     }
   }
-`;
+}
+`

@@ -57,6 +57,16 @@ mutation InitGame($gameId:ID!, $currentWord:String!, $cardId:ID!){
     initGame(gameId:$gameId, currentWord: $currentWord, cardId: $cardId){
         status
     }
+}`
+
+export const LAUNCH_GAME_STEP = gql `
+mutation LaunchGameStep($gameId:ID!, $step: String!, $turnMaster: ID!){
+    launchGameStep(gameId: $gameId, step:$step, turnMaster:$turnMaster){
+        id
+    }
 }
 `
+
+
+
 

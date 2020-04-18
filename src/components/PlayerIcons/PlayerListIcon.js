@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PlayerItem({player, admin}){
+export default function PlayerListIcon({player, admin}){
     return(
         <>
             <li className="collection-item"

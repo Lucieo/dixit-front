@@ -35,8 +35,6 @@ export default function SelectPlayerDeck({gameInfo, userId}){
 
     return(
         <div className="center container">
-            <p>LE MOT POUR CE TOUR</p>
-            <h5>{currentWord}</h5>
         {
             (submittedCard || submitted)
             ? <ValidatedDeck 
@@ -49,6 +47,8 @@ export default function SelectPlayerDeck({gameInfo, userId}){
                 chosenCard={chosenCard}
                 setSubmitted={setSubmitted}
                 actionType={"submitCard"}
+                currentWord={currentWord}
+                userId={userId}
             />
         }
         </div>

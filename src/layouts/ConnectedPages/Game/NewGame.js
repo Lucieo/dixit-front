@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PlayerItem from 'components/PlayerItem';
+import {PlayerListIcon} from 'components/PlayerIcons';
 import AdminGameControls from 'components/GameControls/AdminGameControls';
 import PlayerControls from 'components/GameControls/PlayerControls';
 import {JOIN_GAME, LEAVE_GAME} from 'graphQL/mutations';
@@ -35,7 +35,7 @@ const NewGame = ({gameId, playerslist, creatorId})=>{
     const renderPlayers = ()=>{
         return(
             <ul className="collection">
-                {players.map((player, index)=><PlayerItem key={index} player={player} admin={player.id === creator}/>)}
+                {players.map((player, index)=><PlayerListIcon key={index} player={player} admin={player.id === creator}/>)}
             </ul>
         )
     }

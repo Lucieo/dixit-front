@@ -2,8 +2,9 @@ import React from 'react';
 import Card from 'components/Card';
 import {SELECT_CARD} from 'graphQL/mutations';
 import {useMutation} from '@apollo/react-hooks';
+import { act } from '@testing-library/react';
 
-export default function ChoiceDeck({gameId, cards, chosenCard, setChosenCard, setSubmitted, actionType, ownCard, admin=false}){
+export default function ChoiceDeck({gameId, cards, chosenCard, setChosenCard, setSubmitted, actionType, ownCard, currentWord, admin=false}){
     const [submitCard]=useMutation(SELECT_CARD, {
         variables:{
             gameId,
@@ -15,13 +16,23 @@ export default function ChoiceDeck({gameId, cards, chosenCard, setChosenCard, se
         }
     })
 
+    console.log("PLAYER VOTE ownCard", ownCard)
+    console.log("PLAYER VOTE cards", cards)
+
     return(
         <div>
             {
                 !admin && 
                 <div className='center'>
-                    <h4>carte n°{(cards && chosenCard) && cards.map(card=>card.id).indexOf(chosenCard.id)+1} selectionnée</h4>
-                    <div>
+                    <div className="row">
+                    <div className="col s6">
+                        <h5>Carte choisie</h5>
+                        {chosenCard && <Card card={chosenCard} fullSize={true}/>}
+                    </div>
+                    <div className="col s6">
+                        <h5>Le mot est</h5>
+                        <h4>{currentWord}</h4>
+                        <div>
                         <button className="btn" onClick={()=>submitCard()}>
                             {
                                 actionType=="submitCard"
@@ -30,11 +41,18 @@ export default function ChoiceDeck({gameId, cards, chosenCard, setChosenCard, se
                             }
                         </button>
                     </div>
+                    </div>
+                    </div>
                 </div>
             }
 
            
-
+            {
+                actionType==="submitCard"
+                ? <h4>Vos Cartes</h4>
+                : <h4>Les cartes du jeu</h4>
+            }
+            <hr/>
             <div className="row playerDeck">
                 {
                     cards && cards.map((card, index)=><Card 
@@ -43,7 +61,7 @@ export default function ChoiceDeck({gameId, cards, chosenCard, setChosenCard, se
                         selected={chosenCard.id===card.id}
                         clickAction={()=>setChosenCard(card)}
                         actionType={actionType}
-                        isOwnCard={card===ownCard}
+                        isOwnCard={(ownCard && card===ownCard)}
                         />)
                 }
             </div> 
