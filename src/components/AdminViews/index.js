@@ -11,11 +11,10 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
   const { dataSub, loadingSub } = useSubscription(GAME_ACTION, {
     variables: { gameId: gameInfo.id },
     onSubscriptionData: ({ client, subscriptionData }) => {
-      const data = subscriptionData.data.gameAction
-      if(data.actionType==="submitCard"){
+      const data = subscriptionData.data.gameAction;
+      if (data.actionType === "submitCard") {
         setTurnCards([...turnCards, subscriptionData.data.gameAction.action]);
-      }
-      else{
+      } else {
         setTurnVotes([...turnVotes, subscriptionData.data.gameAction.action]);
       }
     },
@@ -24,9 +23,9 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
     },
   });
 
-  useEffect(()=>{
-    setTurnCards(gameInfo.turnDeck)
-  }, [gameInfo.turnDeck])
+  useEffect(() => {
+    setTurnCards(gameInfo.turnDeck);
+  }, [gameInfo.turnDeck]);
 
   console.log(turnVotes, "turnVotes");
   const selectAdminControls = () => {
@@ -35,21 +34,26 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
     if (gameMode === "select")
       return (
         <SelectPhase
-            gameId={gameInfo.id}
+          gameId={gameInfo.id}
           cards={turnCards}
           currentWord={gameInfo.currentWord}
           players={gameInfo.players}
           userId={userId}
         />
       );
-    if (gameMode === "vote") return <VotePhase
-        currentWord={gameInfo.currentWord}
-        cards={turnCards}
-        players={gameInfo.players} 
-        votes={turnVotes}
-        userId={userId}
-        gameId={gameInfo.id}
-        />;
+    if (gameMode === "vote")
+      return (
+        <VotePhase
+          currentWord={gameInfo.currentWord}
+          cards={turnCards}
+          players={gameInfo.players}
+          votes={turnVotes}
+          userId={userId}
+          gameId={gameInfo.id}
+        />
+      );
+
+    if (gameMode === "showPoints") return <p>POINTS!</p>;
   };
   return <div>{selectAdminControls()}</div>;
 }
