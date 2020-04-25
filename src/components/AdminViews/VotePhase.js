@@ -5,7 +5,6 @@ import { useMutation } from "@apollo/react-hooks";
 import { PlayerCardIcon } from "components/PlayerIcons";
 
 export default function VotePhase({ cards, players, votes, userId, gameId }) {
-  console.log(votes);
   //   const getPlayersWhoVoted = (cardId) => {
   //     const votersIds = votes
   //       .filter((vote) => vote.card.id === cardId)
@@ -26,7 +25,6 @@ export default function VotePhase({ cards, players, votes, userId, gameId }) {
 
   return (
     <div>
-      SEEING PLAYERS VOTES
       {votes.length + 1 === players.length && (
         <div>
           <p>Tout le monde a bien voté!</p>

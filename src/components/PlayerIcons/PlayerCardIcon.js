@@ -1,7 +1,11 @@
 import React from "react";
 
 const styles = {
-  smallStyle: {
+  big: {
+    width: 100,
+    margin: 5,
+  },
+  small: {
     width: 30,
     margin: 5,
   },
@@ -13,13 +17,22 @@ const styles = {
   },
 };
 
-export default function PlayerCardIcon({ player, size = "regular" }) {
+export default function PlayerCardIcon({
+  player,
+  size = "regular",
+  points = undefined,
+}) {
   return (
     <span>
       <img
-        style={size === "regular" ? styles.regularStyle : styles.smallStyle}
+        style={size === "regular" ? styles.regularStyle : styles[size]}
         src={`../images/players/${player.icon}.png`}
       />
+      {points !== undefined && (
+        <span>
+          {player.name} : {points}
+        </span>
+      )}
     </span>
   );
 }

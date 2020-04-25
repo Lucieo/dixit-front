@@ -3,13 +3,18 @@ import SelectPhase from "components/AdminViews/SelectPhase";
 import VotePhase from "components/AdminViews/VotePhase";
 import InitGame from "components/AdminViews/InitGame";
 import { useSubscription } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { GAME_ACTION } from "graphQL/subscriptions";
+import { LAUNCH_GAME_STEP } from "graphQL/mutations";
+import PointsDisplay from "components/PlayerViews/PointsDisplay";
+import { ReactComponent as Badge } from "images/policeman.svg";
 
 export default function AdminViews({ gameInfo, gameMode, userId }) {
+  const gameId = gameInfo.id;
   const [turnCards, setTurnCards] = useState(gameInfo.turnDeck);
   const [turnVotes, setTurnVotes] = useState(gameInfo.turnVotes);
   const { dataSub, loadingSub } = useSubscription(GAME_ACTION, {
-    variables: { gameId: gameInfo.id },
+    variables: { gameId },
     onSubscriptionData: ({ client, subscriptionData }) => {
       const data = subscriptionData.data.gameAction;
       if (data.actionType === "submitCard") {
@@ -23,11 +28,18 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
     },
   });
 
+  const [nextTurn] = useMutation(LAUNCH_GAME_STEP, {
+    variables: {
+      gameId,
+      step: "nextTurn",
+      turnMaster: userId,
+    },
+  });
+
   useEffect(() => {
     setTurnCards(gameInfo.turnDeck);
   }, [gameInfo.turnDeck]);
 
-  console.log(turnVotes, "turnVotes");
   const selectAdminControls = () => {
     if (gameMode === "init")
       return <InitGame gameInfo={gameInfo} userId={userId} />;
@@ -53,7 +65,29 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
         />
       );
 
-    if (gameMode === "showPoints") return <p>POINTS!</p>;
+    if (gameMode === "showPoints")
+      return (
+        <>
+          <div className="center">
+            <button className="btn" onClick={() => nextTurn()}>
+              PASSER AU PROCHAIN TOUR
+            </button>
+          </div>
+          <PointsDisplay gameInfo={gameInfo} userId={userId} />
+        </>
+      );
   };
-  return <div>{selectAdminControls()}</div>;
+  return (
+    <div>
+      <>
+        <div>
+          <Badge style={{ width: 50, height: 50 }} />
+          <span>
+            Vous êtes le maître du tour, à vous de controller les étapes du jeu.
+          </span>
+        </div>
+        {selectAdminControls()}
+      </>
+    </div>
+  );
 }

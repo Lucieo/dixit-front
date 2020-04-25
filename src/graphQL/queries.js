@@ -7,6 +7,8 @@ export const CURRENT_USER = gql`
       name
       email
       icon
+      totalPoints
+      totalGames
     }
   }
 `;

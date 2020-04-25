@@ -11,16 +11,18 @@ export default function Card({
   actionType = null,
   owner = null,
   votes = null,
-  fullSize = false
+  fullSize = false,
+  isTurnMasterCard = false,
 }) {
+  console.log("isTurnMasterCard", isTurnMasterCard);
   return (
-    <div className={`col ${fullSize ? 'm12' : 'm4'} s12 playerCard__wrapper`} >
+    <div className={`col ${fullSize ? "m12" : "m4"} s12 playerCard__wrapper`}>
       <div
         className={`playerCard ${
           actionType === "submitCard" && selected && "selected"
         } ${actionType === "voteForCard" && selected && "voted"} ${
           isOwnCard && "ownCard"
-        } ${!isOwnCard && "canHover"}`}
+        } ${!isOwnCard && "canHover"} ${isTurnMasterCard && "selected"}`}
         style={{
           background: `url(http://localhost:4000/images/${card.fileName})`,
         }}
@@ -37,7 +39,13 @@ export default function Card({
           </i>
         )}
       </div>
-      {owner && <CardOwner owner={owner} isOwnCard={isOwnCard} />}
+      {owner && (
+        <CardOwner
+          owner={owner}
+          isOwnCard={isOwnCard}
+          isTurnMasterCard={isTurnMasterCard}
+        />
+      )}
       {votes && <CardVotes votes={votes} />}
     </div>
   );
