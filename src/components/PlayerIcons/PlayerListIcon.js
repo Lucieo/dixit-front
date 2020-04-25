@@ -8,10 +8,11 @@ export default function PlayerListIcon({ player, admin, points }) {
           <img
             style={{ width: 30, marginRight: 10 }}
             src={`../images/players/${player.icon}.png`}
+            alt="player icon"
           />
         </span>
         <span>{player.name} </span> {admin && <span> - GAME MASTER</span>}
-        {points && <span> : {points} points</span>}
+        {points !== undefined && <span> : {points} points</span>}
       </li>
     </>
   );

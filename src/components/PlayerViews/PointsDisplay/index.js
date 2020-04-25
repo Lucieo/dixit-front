@@ -2,7 +2,7 @@ import React from "react";
 import Card from "components/Card";
 
 export default function PointsDisplay({ gameInfo, userId }) {
-  const { turnDeck, turnPoints, turnVotes, players, creator } = gameInfo;
+  const { turnDeck, turnPoints, turnVotes, players } = gameInfo;
   const playerPoints = turnPoints.find((point) => point.player === userId);
   return (
     <div className="center">

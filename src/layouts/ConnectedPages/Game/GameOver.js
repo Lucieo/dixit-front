@@ -13,9 +13,7 @@ const GameOver = ({ gameInfo }) => {
     })
     .sort((a, b) => b.points - a.points);
   const winner = podium.splice(0, 1)[0];
-  console.log("WINNER", winner);
 
-  console.log("PODIUM", podium);
   return (
     <div className="center">
       <h3>GAME OVER BITCHES</h3>

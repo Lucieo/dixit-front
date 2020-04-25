@@ -8,6 +8,7 @@ import { GAME_ACTION } from "graphQL/subscriptions";
 import { LAUNCH_GAME_STEP } from "graphQL/mutations";
 import PointsDisplay from "components/PlayerViews/PointsDisplay";
 import { ReactComponent as Badge } from "images/policeman.svg";
+import "./Admin.css";
 
 export default function AdminViews({ gameInfo, gameMode, userId }) {
   const gameId = gameInfo.id;
@@ -28,7 +29,7 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
     },
   });
 
-  const [nextTurn] = useMutation(LAUNCH_GAME_STEP, {
+  const [nextTurn, { loading }] = useMutation(LAUNCH_GAME_STEP, {
     variables: {
       gameId,
       step: "nextTurn",
@@ -68,8 +69,17 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
     if (gameMode === "showPoints")
       return (
         <>
-          <div className="center">
-            <button className="btn" onClick={() => nextTurn()}>
+          <div className="admincontrols__box">
+            <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
+            <p>
+              Une fois que tout le monde a vu ses points vous pourrez passer la
+              main au prochain joueur.
+            </p>
+            <button
+              className={`btn ${loading && "disabled"}`}
+              onClick={() => nextTurn()}
+            >
+              {loading && <i className="material-icons">access_time</i>}
               PASSER AU PROCHAIN TOUR
             </button>
           </div>
@@ -80,10 +90,12 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
   return (
     <div>
       <>
-        <div>
+        <div className="admin__info">
           <Badge style={{ width: 50, height: 50 }} />
           <span>
-            Vous êtes le maître du tour, à vous de controller les étapes du jeu.
+            Vous êtes le maître du tour. C'est à vous de controller les étapes
+            du jeu. Les boutons s'afficheront automatiquement pour vous signaler
+            quand déclencher les actions.
           </span>
         </div>
         {selectAdminControls()}

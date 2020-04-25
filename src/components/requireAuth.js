@@ -1,26 +1,21 @@
-import React, {useEffect} from 'react';
-import {useQuery} from "@apollo/react-hooks";
-import {IS_LOGGED_IN} from '../graphQL/localState';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { IS_LOGGED_IN } from "../graphQL/localState";
 import { useHistory } from "react-router-dom";
 
 const requireAuth = (WrappedComponent) => {
-    const HOC = (props)=>{
-        const { data } = useQuery(IS_LOGGED_IN);
-        let history = useHistory();
+  const HOC = (props) => {
+    const { data } = useQuery(IS_LOGGED_IN);
+    let history = useHistory();
 
-        if(data.isLoggedIn){
-            return (
-                <WrappedComponent
-                    {...props}
-                />
-                );
-        }
-        else{
-            history.push('/');
-            return <></>
-        }
+    if (data.isLoggedIn) {
+      return <WrappedComponent {...props} />;
+    } else {
+      history.push("/");
+      return <></>;
     }
-    return HOC;
+  };
+  return HOC;
 };
 
 export default requireAuth;

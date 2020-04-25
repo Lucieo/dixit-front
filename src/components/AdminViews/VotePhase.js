@@ -15,7 +15,7 @@ export default function VotePhase({ cards, players, votes, userId, gameId }) {
   //     return playersProfiles;
   //   };
 
-  const [launchEvaluation] = useMutation(LAUNCH_GAME_STEP, {
+  const [launchEvaluation, { loading }] = useMutation(LAUNCH_GAME_STEP, {
     variables: {
       gameId,
       step: "launchEvaluation",
@@ -26,9 +26,14 @@ export default function VotePhase({ cards, players, votes, userId, gameId }) {
   return (
     <div>
       {votes.length + 1 === players.length && (
-        <div>
+        <div className="admincontrols__box">
+          <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
           <p>Tout le monde a bien voté!</p>
-          <button className="btn" onClick={() => launchEvaluation()}>
+          <button
+            className={`btn ${loading && "disabled"}`}
+            onClick={() => launchEvaluation()}
+          >
+            {loading && <i className="material-icons">access_time</i>}
             DISTRIBUER LES POINTS
           </button>
         </div>

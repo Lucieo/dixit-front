@@ -17,15 +17,23 @@
   justify-content: center;
 }
 
-.connected-home__stats {
-  max-width: 350px;
+.connected-home__box {
   text-align: center;
   margin: 0 auto;
   border-radius: 5px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   padding: 20px;
+  height: 100%;
 }
 
 .connected-home__stats h6 {
+  font-weight: bold;
+}
+
+.connected-home__flex {
+  display: flex;
+}
+
+.bold {
   font-weight: bold;
 }

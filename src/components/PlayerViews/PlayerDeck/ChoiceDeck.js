@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "components/Card";
 import { SELECT_CARD } from "graphQL/mutations";
 import { useMutation } from "@apollo/react-hooks";
-import { act } from "@testing-library/react";
 
 export default function ChoiceDeck({
   gameId,
@@ -15,7 +14,7 @@ export default function ChoiceDeck({
   currentWord,
   admin = false,
 }) {
-  const [submitCard] = useMutation(SELECT_CARD, {
+  const [submitCard, { loading }] = useMutation(SELECT_CARD, {
     variables: {
       gameId,
       cardId: chosenCard && chosenCard.id,
@@ -39,10 +38,16 @@ export default function ChoiceDeck({
               <h5>Le mot est</h5>
               <h4>{currentWord}</h4>
               <div>
-                <button className="btn" onClick={() => submitCard()}>
-                  {actionType == "submitCard"
-                    ? "Valider ma carte"
-                    : "Voter pour cette carte"}
+                <button
+                  className={`btn ${loading && "disabled"}`}
+                  onClick={() => submitCard()}
+                >
+                  {loading && <i className="material-icons">access_time</i>}
+                  {actionType == "submitCard" ? (
+                    <span>Valider ma carte</span>
+                  ) : (
+                    <span>Voter pour cette carte</span>
+                  )}
                 </button>
               </div>
             </div>

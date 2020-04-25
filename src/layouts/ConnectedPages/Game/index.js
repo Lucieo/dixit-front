@@ -15,6 +15,7 @@ import OnGoingGame from "./OnGoingGame";
 const Game = (props) => {
   const { gameId } = useParams();
   const [gameInfo, setGameInfo] = useState({});
+
   const user = useQuery(GET_USER_ID).data;
   const userId = user && user.userId;
   const [leaveGame] = useMutation(LEAVE_GAME, {

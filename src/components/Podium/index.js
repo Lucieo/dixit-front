@@ -9,13 +9,14 @@ export default function Podium({ gameInfo }) {
       <p>Le Podium</p>
       {gamePoints
         .sort((a, b) => b.points - a.points)
-        .map((point) => {
+        .map((point, idx) => {
           const player = players.find((player) => player.id === point.player);
           return (
             <PlayerCardIcon
               player={player}
               size={"small"}
               points={point.points}
+              key={idx}
             />
           );
         })}
