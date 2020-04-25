@@ -24,7 +24,7 @@ export default function Card({
           isOwnCard && "ownCard"
         } ${!isOwnCard && "canHover"} ${isTurnMasterCard && "selected"}`}
         style={{
-          background: `url(http://localhost:4000/images/${card.fileName})`,
+          background: `url(https://dixit-live.herokuapp.com/images/${card.fileName})`,
         }}
         onClick={() => clickAction && clickAction()}
       >
