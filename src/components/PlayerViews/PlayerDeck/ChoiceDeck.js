@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Card from "components/Card";
 import { SELECT_CARD } from "graphQL/mutations";
 import { useMutation } from "@apollo/react-hooks";
+import MysteryCard from "components/MysteryCard";
 
 export default function ChoiceDeck({
   gameId,
@@ -12,6 +13,7 @@ export default function ChoiceDeck({
   actionType,
   ownCard,
   currentWord,
+  turnMaster,
   admin = false,
 }) {
   const [submitCard, { loading }] = useMutation(SELECT_CARD, {
@@ -27,19 +29,30 @@ export default function ChoiceDeck({
 
   return (
     <div>
+      <div className="center">
+        {actionType == "submitCard" ? (
+          <h4>Il est temps de choisir une carte</h4>
+        ) : (
+          <h4>Passons au vote!</h4>
+        )}
+      </div>
       {!admin && (
         <div className="center">
           <div className="row">
-            <div className="col s6">
+            <div className="col m6 s12">
               <h5>Carte choisie</h5>
-              {chosenCard && <Card card={chosenCard} fullSize={true} />}
+              {chosenCard ? (
+                <Card card={chosenCard} fullSize={true} />
+              ) : (
+                <MysteryCard />
+              )}
             </div>
-            <div className="col s6">
-              <h5>Le mot est</h5>
+            <div className="col m6 s12">
+              <h5>{turnMaster && turnMaster.name} a choisi le mot</h5>
               <h4>{currentWord}</h4>
               <div>
                 <button
-                  className={`btn ${loading && "disabled"}`}
+                  className={`btn ${(loading || !chosenCard) && "disabled"}`}
                   onClick={() => submitCard()}
                 >
                   {loading && <i className="material-icons">access_time</i>}
@@ -56,9 +69,9 @@ export default function ChoiceDeck({
       )}
 
       {actionType === "submitCard" ? (
-        <h4>Vos Cartes</h4>
+        <h4 className="center">vos cartes</h4>
       ) : (
-        <h4>Les cartes du jeu</h4>
+        <h4 className="center">les cartes du plateau</h4>
       )}
       <hr />
       <div className="row playerDeck">
@@ -67,8 +80,12 @@ export default function ChoiceDeck({
             <Card
               card={card}
               key={index}
-              selected={chosenCard.id === card.id}
-              clickAction={() => setChosenCard(card)}
+              selected={chosenCard && chosenCard.id === card.id}
+              clickAction={() => {
+                if ((ownCard && card !== ownCard) || !ownCard) {
+                  setChosenCard(card);
+                }
+              }}
               actionType={actionType}
               isOwnCard={ownCard && card === ownCard}
             />

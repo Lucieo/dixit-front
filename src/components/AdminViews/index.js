@@ -92,12 +92,12 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
       <>
         <div className="admin__info">
           <Badge style={{ width: 50, height: 50 }} />
-          <span>
-            Vous êtes le maître du tour. C'est à vous de controller les étapes
-            du jeu. Les boutons s'afficheront automatiquement pour vous signaler
-            quand déclencher les actions.
-          </span>
         </div>
+        <p>
+          Vous êtes le maître du tour. C'est à vous de controller les étapes du
+          jeu. Les boutons s'afficheront automatiquement pour vous signaler
+          quand déclencher les actions.
+        </p>
         {selectAdminControls()}
       </>
     </div>

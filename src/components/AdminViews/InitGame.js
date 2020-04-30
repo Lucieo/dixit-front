@@ -5,6 +5,7 @@ import { GET_DECK } from "graphQL/queries";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import Loading from "components/Loading";
 import Card from "components/Card";
+import MysteryCard from "components/MysteryCard";
 
 export default function InitGame({ gameInfo, userId }) {
   const { turnDeck } = gameInfo;
@@ -19,11 +20,10 @@ export default function InitGame({ gameInfo, userId }) {
     variables: { gameId },
     onCompleted({ getDeck }) {
       setCards(getDeck.cards);
-      submittedCard
-        ? setChosenCard(
-            getDeck.cards.find((card) => submittedCard.card.id === card.id)
-          )
-        : setChosenCard(getDeck.cards[0]);
+      submittedCard &&
+        setChosenCard(
+          getDeck.cards.find((card) => submittedCard.card.id === card.id)
+        );
     },
     fetchPolicy: "network-only",
     onError(...error) {
@@ -44,11 +44,18 @@ export default function InitGame({ gameInfo, userId }) {
   return (
     <>
       <div className="row">
-        <div className="col s6">
+        <hr />
+        <h4 className="center">Commencer un nouveau tour</h4>
+        <hr />
+        <div className="col m6 s12">
           <h5>Ma carte</h5>
-          {chosenCard && <Card card={chosenCard} fullSize={true} />}
+          {chosenCard ? (
+            <Card card={chosenCard} fullSize={true} />
+          ) : (
+            <MysteryCard />
+          )}
         </div>
-        <div className="col s6">
+        <div className="col m6 s12">
           <h5>Mon mot</h5>
           <input
             placeholder="le mot illustrant votre carte"
@@ -58,7 +65,7 @@ export default function InitGame({ gameInfo, userId }) {
         </div>
         <div className="col s12 center">
           <button
-            className={`btn ${!currentWord && "disabled"}`}
+            className={`btn ${(!currentWord || !chosenCard) && "disabled"}`}
             onClick={() => initGame()}
           >
             VALIDER MON CHOIX
@@ -66,7 +73,6 @@ export default function InitGame({ gameInfo, userId }) {
         </div>
       </div>
       <hr />
-      <h5 className="center">Vos cartes</h5>
       <ChoiceDeck
         gameId={gameId}
         cards={cards}

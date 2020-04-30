@@ -8,7 +8,14 @@ export default function CardOwner({
 }) {
   return (
     <div className="center">
-      <p>
+      <p
+        style={{
+          height: 30,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {isOwnCard ? "Votre carte" : `la carte de ${owner.name}`}
         {isTurnMasterCard && <i className="material-icons amber-text">star</i>}
       </p>

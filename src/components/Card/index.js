@@ -14,7 +14,6 @@ export default function Card({
   fullSize = false,
   isTurnMasterCard = false,
 }) {
-  console.log("isTurnMasterCard", isTurnMasterCard);
   return (
     <div className={`col ${fullSize ? "m12" : "m4"} s12 playerCard__wrapper`}>
       <div
@@ -24,7 +23,10 @@ export default function Card({
           isOwnCard && "ownCard"
         } ${!isOwnCard && "canHover"} ${isTurnMasterCard && "selected"}`}
         style={{
-          background: `url(https://dixit-live.herokuapp.com/images/${card.fileName})`,
+          background:
+            process.env.NODE_ENV === "development"
+              ? `url(http://localhost:4000/images/${card.fileName})`
+              : `url(https://dixit-live.herokuapp.com/images/${card.fileName})`,
         }}
         onClick={() => clickAction && clickAction()}
       >

@@ -2,21 +2,35 @@ import React from "react";
 import Card from "components/Card";
 
 export default function PointsDisplay({ gameInfo, userId }) {
-  const { turnDeck, turnPoints, turnVotes, players } = gameInfo;
+  const { turnDeck, turnVotes, players, turn } = gameInfo;
+  let { turnPoints } = gameInfo;
+  const turnMasterId = players[turn].id;
+  const turnMasterPointsIndex = turnPoints.findIndex(
+    (el) => el.player === turnMasterId
+  );
+  const turnMasterPoints = turnPoints.splice(turnMasterPointsIndex, 1);
+  turnPoints = [turnMasterPoints[0], ...turnPoints];
   const playerPoints = turnPoints.find((point) => point.player === userId);
+
+  const getPointMessage = (playerPoints) => {
+    return playerPoints.points > 0 ? (
+      <h4>Bravo vous avez gagné {playerPoints.points} points</h4>
+    ) : (
+      <h4>Dommage {playerPoints.points} pour vous sur ce tour...</h4>
+    );
+  };
+
   return (
     <div className="center">
-      <p>Le mot pour ce tour</p>
+      <h4 className="center">Distribution de points!</h4>
+      <hr />
+      <h6>{players[turn].name} avait choisi le mot</h6>
       <h5>{gameInfo.currentWord}</h5>
       <hr />
 
-      {playerPoints.points > 0 ? (
-        <h4>Bravo vous avez gagné {playerPoints.points} points</h4>
-      ) : (
-        <h4>Dommage {playerPoints.points} pour vous sur ce tour...</h4>
-      )}
+      {playerPoints && getPointMessage(playerPoints)}
 
-      <div className="row">
+      <div className="row  same-height">
         {turnPoints.map((points, idx) => {
           const card = turnDeck.find((card) => {
             return card.owner === points.player;

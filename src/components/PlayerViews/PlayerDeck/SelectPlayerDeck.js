@@ -5,8 +5,13 @@ import ValidatedDeck from "./ValidatedDeck";
 import { GET_DECK } from "graphQL/queries";
 import { useQuery } from "@apollo/react-hooks";
 
-export default function SelectPlayerDeck({ gameInfo, userId }) {
-  const { turnDeck, currentWord } = gameInfo;
+export default function SelectPlayerDeck({
+  gameInfo,
+  userId,
+  turnVotes,
+  turnDeck,
+}) {
+  const { currentWord, players, turn } = gameInfo;
   const gameId = gameInfo.id;
   const submittedCard = turnDeck.find((el) => el.owner === userId);
   const [chosenCard, setChosenCard] = useState();
@@ -18,11 +23,10 @@ export default function SelectPlayerDeck({ gameInfo, userId }) {
     onCompleted({ getDeck }) {
       setCards(getDeck.cards);
       console.log("GETTING USER DECK", getDeck.cards);
-      submittedCard
-        ? setChosenCard(
-            getDeck.cards.find((card) => submittedCard.card.id === card.id)
-          )
-        : setChosenCard(getDeck.cards[0]);
+      submittedCard &&
+        setChosenCard(
+          getDeck.cards.find((card) => submittedCard.card.id === card.id)
+        );
     },
     fetchPolicy: "network-only",
     onError(...error) {
@@ -39,6 +43,11 @@ export default function SelectPlayerDeck({ gameInfo, userId }) {
           currentword={currentWord}
           chosenCard={chosenCard}
           actionType={"submitCard"}
+          players={gameInfo.players}
+          turn={gameInfo.turn}
+          turnDeck={turnDeck}
+          turnVotes={turnVotes}
+          cards={cards}
         />
       ) : (
         <ChoiceDeck
@@ -50,6 +59,7 @@ export default function SelectPlayerDeck({ gameInfo, userId }) {
           actionType={"submitCard"}
           currentWord={currentWord}
           userId={userId}
+          turnMaster={players[turn]}
         />
       )}
     </div>

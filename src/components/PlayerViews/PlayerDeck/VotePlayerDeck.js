@@ -4,20 +4,18 @@ import { shuffle } from "utils";
 import ChoiceDeck from "./ChoiceDeck";
 import ValidatedDeck from "./ValidatedDeck";
 
-export default function VotePlayerDeck({ gameInfo, userId }) {
-  const pickACardNotMine = () => {
-    const otherCards = gameInfo.turnDeck
-      .filter((card) => card.owner !== userId)
-      .map((el) => el.card);
-    return otherCards[Math.floor(Math.random() * otherCards.length)];
-  };
-
-  const { turnDeck, turnVotes } = gameInfo;
+export default function VotePlayerDeck({
+  gameInfo,
+  userId,
+  turnDeck,
+  turnVotes,
+}) {
   const gameId = gameInfo.id;
+  const { players, turn } = gameInfo;
   const submittedCard = turnVotes.find((el) => el.owner === userId);
   const [cards, setCards] = useState(shuffle(turnDeck.map((el) => el.card)));
   const [chosenCard, setChosenCard] = useState(
-    submittedCard ? submittedCard.card : pickACardNotMine()
+    submittedCard ? submittedCard.card : ""
   );
   const [submitted, setSubmitted] = useState();
 
@@ -28,6 +26,10 @@ export default function VotePlayerDeck({ gameInfo, userId }) {
           chosenCard={chosenCard}
           actionType={"voteForCard"}
           currentword={gameInfo.currentWord}
+          players={gameInfo.players}
+          turn={gameInfo.turn}
+          turnDeck={turnDeck}
+          turnVotes={turnVotes}
         />
       ) : (
         <ChoiceDeck
@@ -39,6 +41,7 @@ export default function VotePlayerDeck({ gameInfo, userId }) {
           actionType={"voteForCard"}
           ownCard={turnDeck.find((card) => card.owner === userId).card}
           currentWord={gameInfo.currentWord}
+          turnMaster={players[turn]}
         />
       )}
     </>
