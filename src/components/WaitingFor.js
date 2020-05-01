@@ -34,7 +34,9 @@ export default function WaitingFor({ players, received, turn }) {
       )}
       <div style={styles.listStyle}>
         {latecomers.length > 0 &&
-          latecomers.map((player) => <PlayerListIcon player={player} />)}
+          latecomers.map((player, idx) => (
+            <PlayerListIcon player={player} key={idx} />
+          ))}
       </div>
       <hr />
     </div>

@@ -31,7 +31,7 @@ export default function InitGame({ gameInfo, userId }) {
     },
   });
 
-  const [initGame] = useMutation(INIT_GAME, {
+  const [initGame, initGameCall] = useMutation(INIT_GAME, {
     variables: {
       gameId,
       cardId: chosenCard && chosenCard.id,
@@ -65,9 +65,15 @@ export default function InitGame({ gameInfo, userId }) {
         </div>
         <div className="col s12 center">
           <button
-            className={`btn ${(!currentWord || !chosenCard) && "disabled"}`}
+            className={`btn ${
+              (!currentWord || !chosenCard || initGameCall.loading) &&
+              "disabled"
+            }`}
             onClick={() => initGame()}
           >
+            {initGameCall.loading && (
+              <i className="material-icons">access_time</i>
+            )}
             VALIDER MON CHOIX
           </button>
         </div>

@@ -23,7 +23,7 @@ export default function ValidatedDeck({
           <WaitingFor players={players} turn={turn} received={turnDeck} />
           <p>
             Vous avez choisi la carte suivante pour le mot
-            <span style={{ fontWeight: "bold" }}> {currentword}</span> :{" "}
+            <span style={{ fontWeight: "bold" }}> {currentword}</span> :
           </p>
         </div>
       );
@@ -48,8 +48,8 @@ export default function ValidatedDeck({
       <p className="center">Vous en recevrez une nouvelle au prochain tour</p>
       {userCards
         .filter((card) => card !== chosenCard)
-        .map((card) => (
-          <Card card={card} />
+        .map((card, idx) => (
+          <Card key={idx} card={card} />
         ))}
     </div>
   );

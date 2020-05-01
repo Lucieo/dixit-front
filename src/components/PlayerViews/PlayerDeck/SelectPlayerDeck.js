@@ -15,8 +15,9 @@ export default function SelectPlayerDeck({
   const { currentWord, players, turn } = gameInfo;
   const gameId = gameInfo.id;
   const submittedCard = turnDeck.find((el) => el.owner === userId);
+  console.log(submittedCard);
   const [chosenCard, setChosenCard] = useState(
-    submittedCard && cards.find((card) => submittedCard.card.id === card.id)
+    submittedCard && submittedCard.card
   );
   const [submitted, setSubmitted] = useState();
 
