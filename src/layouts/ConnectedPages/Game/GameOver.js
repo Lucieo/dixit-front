@@ -20,11 +20,7 @@ const GameOver = ({ gameInfo }) => {
 
   return (
     <div className="center">
-      {winners.length === 1 ? (
-        <h3>GAME OVER BITCHES</h3>
-      ) : (
-        <h3>INCROYABLE SUSPENCE</h3>
-      )}
+      <h3>GAME OVER BITCHES</h3>
       <img className="game-over__gif" src={endGif} alt="artist" />
       <div>
         {winners.length === 1 ? (

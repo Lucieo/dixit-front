@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SelectPlayerDeck from "components/PlayerViews/PlayerDeck/SelectPlayerDeck";
 import VotePlayerDeck from "components/PlayerViews/PlayerDeck/VotePlayerDeck";
 import PointsDisplay from "components/PlayerViews/PointsDisplay";
@@ -10,17 +10,28 @@ import { GET_DECK } from "graphQL/queries";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function PlayerViews({ gameInfo, gameMode, userId }) {
+  const findSubmittedCard = () => {
+    return gameMode === "select"
+      ? gameInfo.turnDeck.find((el) => el.owner === userId)
+      : gameInfo.turnVotes.find((el) => el.owner === userId);
+  };
   const [userCards, setUserCards] = useState([]);
+  const [submittedCard, setSubmittedCard] = useState(findSubmittedCard());
+  console.log("SUBMITTED CARD IS", submittedCard);
   const [turnDeck, setTurnDeck] = useState(gameInfo.turnDeck);
   const [turnVotes, setTurnVotes] = useState(gameInfo.turnVotes);
   const { dataSub, loadingSub } = useSubscription(GAME_ACTION, {
     variables: { gameId: gameInfo.id },
     onSubscriptionData: ({ client, subscriptionData }) => {
       const data = subscriptionData.data.gameAction;
+      console.log("NEW GAME ACTION RECEIVED", data);
       if (data.actionType === "submitCard") {
-        setTurnDeck([...turnDeck, subscriptionData.data.gameAction.action]);
+        setTurnDeck([...turnDeck, data.action]);
       } else {
-        setTurnVotes([...turnVotes, subscriptionData.data.gameAction.action]);
+        setTurnVotes([...turnVotes, data.action]);
+      }
+      if (data.action.owner === userId) {
+        setSubmittedCard(data.action.card);
       }
     },
     onError(...error) {
@@ -40,6 +51,10 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
     },
   });
 
+  useEffect(() => {
+    setSubmittedCard(findSubmittedCard());
+  }, [gameInfo]);
+
   if (loading) return <Loading />;
 
   const selectGameView = () => {
@@ -52,6 +67,7 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
           turnDeck={turnDeck}
           turnVotes={turnVotes}
           cards={userCards}
+          submittedCard={submittedCard}
         />
       );
     if (gameMode === "vote")
@@ -62,6 +78,7 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
           turnDeck={turnDeck}
           turnVotes={turnVotes}
           userCards={userCards}
+          submittedCard={submittedCard}
         />
       );
     if (gameMode === "showPoints")

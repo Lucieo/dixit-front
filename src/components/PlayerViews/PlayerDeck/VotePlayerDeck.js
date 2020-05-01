@@ -7,19 +7,21 @@ import ValidatedDeck from "./ValidatedDeck";
 export default function VotePlayerDeck({
   gameInfo,
   userId,
-  turnDeck,
   turnVotes,
   userCards,
+  submittedCard,
 }) {
   const gameId = gameInfo.id;
+  const { turnDeck } = gameInfo;
   const { players, turn } = gameInfo;
-  const submittedCard = turnVotes.find((el) => el.owner === userId);
   const [cards, setCards] = useState(shuffle(turnDeck.map((el) => el.card)));
   const [chosenCard, setChosenCard] = useState(
-    submittedCard ? submittedCard.card : ""
+    submittedCard && submittedCard.card
   );
   const [submitted, setSubmitted] = useState();
-
+  console.log("turnDeck", turnDeck);
+  console.log(submittedCard, "submittedCard");
+  console.log(submittedCard, "submittedCard");
   return (
     <>
       {submittedCard || submitted ? (
