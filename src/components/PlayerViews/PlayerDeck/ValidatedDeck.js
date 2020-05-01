@@ -12,7 +12,7 @@ export default function ValidatedDeck({
   turn,
   turnDeck,
   turnVotes,
-  cards,
+  userCards,
 }) {
   const selectMessage = () => {
     if (actionType === "submitCard")
@@ -43,6 +43,14 @@ export default function ValidatedDeck({
     <div>
       {selectMessage()}
       {chosenCard && <Card card={chosenCard} />}
+      <hr />
+      <h5>Profitez-en pour regarder vos cartes</h5>
+      <p className="center">Vous en recevrez une nouvelle au prochain tour</p>
+      {userCards
+        .filter((card) => card !== chosenCard)
+        .map((card) => (
+          <Card card={card} />
+        ))}
     </div>
   );
 }

@@ -5,9 +5,16 @@ export default function CardVotes({ votes }) {
   return (
     <div className="center">
       <p>les votes reçus</p>
-      {votes.map((vote, idx) => (
-        <PlayerCardIcon key={idx} player={vote} size={"small"} />
-      ))}
+      {votes.length ? (
+        votes.map((vote, idx) => (
+          <span key={idx}>
+            <PlayerCardIcon player={vote} size={"small"} />
+            <span>{vote.name}</span>
+          </span>
+        ))
+      ) : (
+        <i>pas de vote pour cette carte</i>
+      )}
     </div>
   );
 }

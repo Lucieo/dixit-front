@@ -8,8 +8,9 @@ export default function PointsDisplay({ gameInfo, userId }) {
   const turnMasterPointsIndex = turnPoints.findIndex(
     (el) => el.player === turnMasterId
   );
-  const turnMasterPoints = turnPoints.splice(turnMasterPointsIndex, 1);
-  turnPoints = [turnMasterPoints[0], ...turnPoints];
+  const turnMasterCard = turnDeck.find((card) => card.owner === turnMasterId)
+    .card;
+
   const playerPoints = turnPoints.find((point) => point.player === userId);
 
   const getPointMessage = (playerPoints) => {
@@ -29,28 +30,43 @@ export default function PointsDisplay({ gameInfo, userId }) {
       <hr />
 
       {playerPoints && getPointMessage(playerPoints)}
+      <hr />
+      <h5>La carte qu'il fallait trouver</h5>
+      <Card
+        card={turnMasterCard}
+        owner={players[turn]}
+        isTurnMasterCard={true}
+        votes={turnVotes
+          .filter((vote) => vote.card.id === turnMasterCard.id)
+          .map((vote) => players.find((player) => player.id === vote.owner))}
+      />
+      <hr />
 
       <div className="row  same-height">
-        {turnPoints.map((points, idx) => {
-          const card = turnDeck.find((card) => {
-            return card.owner === points.player;
-          }).card;
-          const owner = players.find((player) => player.id === points.player);
-          const votes = turnVotes
-            .filter((vote) => vote.card.id === card.id)
-            .map((vote) => players.find((player) => player.id === vote.owner));
+        {turnPoints
+          .filter((card, idx) => idx !== turnMasterPointsIndex)
+          .map((points, idx) => {
+            const card = turnDeck.find((card) => {
+              return card.owner === points.player;
+            }).card;
+            const owner = players.find((player) => player.id === points.player);
+            const votes = turnVotes
+              .filter((vote) => vote.card.id === card.id)
+              .map((vote) =>
+                players.find((player) => player.id === vote.owner)
+              );
 
-          return (
-            <Card
-              key={idx}
-              card={card}
-              owner={owner}
-              votes={votes}
-              isOwnCard={owner.id === userId}
-              isTurnMasterCard={owner.id === gameInfo.players[gameInfo.turn].id}
-            />
-          );
-        })}
+            return (
+              <Card
+                key={idx}
+                card={card}
+                owner={owner}
+                votes={votes}
+                isOwnCard={owner.id === userId}
+                isTurnMasterCard={false}
+              />
+            );
+          })}
       </div>
     </div>
   );

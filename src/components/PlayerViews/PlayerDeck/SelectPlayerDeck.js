@@ -10,31 +10,15 @@ export default function SelectPlayerDeck({
   userId,
   turnVotes,
   turnDeck,
+  cards,
 }) {
   const { currentWord, players, turn } = gameInfo;
   const gameId = gameInfo.id;
   const submittedCard = turnDeck.find((el) => el.owner === userId);
-  const [chosenCard, setChosenCard] = useState();
+  const [chosenCard, setChosenCard] = useState(
+    submittedCard && cards.find((card) => submittedCard.card.id === card.id)
+  );
   const [submitted, setSubmitted] = useState();
-  const [cards, setCards] = useState([]);
-
-  const { loading } = useQuery(GET_DECK, {
-    variables: { gameId },
-    onCompleted({ getDeck }) {
-      setCards(getDeck.cards);
-      console.log("GETTING USER DECK", getDeck.cards);
-      submittedCard &&
-        setChosenCard(
-          getDeck.cards.find((card) => submittedCard.card.id === card.id)
-        );
-    },
-    fetchPolicy: "network-only",
-    onError(...error) {
-      console.log(error);
-    },
-  });
-
-  if (loading) return <Loading />;
 
   return (
     <div className="center container">
@@ -47,7 +31,7 @@ export default function SelectPlayerDeck({
           turn={gameInfo.turn}
           turnDeck={turnDeck}
           turnVotes={turnVotes}
-          cards={cards}
+          userCards={cards}
         />
       ) : (
         <ChoiceDeck

@@ -9,6 +9,7 @@ export default function VotePlayerDeck({
   userId,
   turnDeck,
   turnVotes,
+  userCards,
 }) {
   const gameId = gameInfo.id;
   const { players, turn } = gameInfo;
@@ -30,6 +31,7 @@ export default function VotePlayerDeck({
           turn={gameInfo.turn}
           turnDeck={turnDeck}
           turnVotes={turnVotes}
+          userCards={userCards}
         />
       ) : (
         <ChoiceDeck
