@@ -2,6 +2,7 @@ import React from "react";
 import Card from "components/Card";
 import { LAUNCH_GAME_STEP } from "graphQL/mutations";
 import { useMutation } from "@apollo/react-hooks";
+import Ding from "sounds/ding.mp3";
 
 export default function SelectPhase({
   cards,
@@ -25,6 +26,7 @@ export default function SelectPhase({
         <div className="admincontrols__box">
           <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
           <p>Tout le monde a choisi sa carte!</p>
+          <audio src={Ding} autoPlay={true} />
           <button
             className={`btn ${loading && "disabled"}`}
             onClick={() => launchVote()}

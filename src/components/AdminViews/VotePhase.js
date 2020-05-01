@@ -3,6 +3,7 @@ import Card from "components/Card";
 import { LAUNCH_GAME_STEP } from "graphQL/mutations";
 import { useMutation } from "@apollo/react-hooks";
 import { PlayerCardIcon } from "components/PlayerIcons";
+import Ding from "sounds/ding.mp3";
 
 export default function VotePhase({ cards, players, votes, userId, gameId }) {
   //   const getPlayersWhoVoted = (cardId) => {
@@ -29,6 +30,7 @@ export default function VotePhase({ cards, players, votes, userId, gameId }) {
         <div className="admincontrols__box">
           <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
           <p>Tout le monde a bien voté!</p>
+          <audio src={Ding} autoPlay />
           <button
             className={`btn ${loading && "disabled"}`}
             onClick={() => launchEvaluation()}

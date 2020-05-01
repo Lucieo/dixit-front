@@ -9,9 +9,9 @@ import Loading from "components/Loading";
 import { GET_DECK } from "graphQL/queries";
 import { useQuery } from "@apollo/react-hooks";
 
-export default function PlayerViews({ gameInfo, gameMode, userId }) {
+export default function PlayerViews({ gameInfo, userId }) {
   const findSubmittedCard = () => {
-    return gameMode === "select"
+    return gameInfo.step === "select"
       ? gameInfo.turnDeck.find((el) => el.owner === userId)
       : gameInfo.turnVotes.find((el) => el.owner === userId);
   };
@@ -43,7 +43,10 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
     variables: { gameId: gameInfo.id },
     onCompleted({ getDeck }) {
       setUserCards(getDeck.cards);
-      console.log("GETTING USER DECK", getDeck.cards);
+      console.log(
+        "GETTING USER DECK-------------------------------------",
+        getDeck.cards
+      );
     },
     fetchPolicy: "network-only",
     onError(...error) {
@@ -58,8 +61,8 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
   if (loading) return <Loading />;
 
   const selectGameView = () => {
-    if (gameMode === "init") return <WaitForInit gameInfo={gameInfo} />;
-    if (gameMode === "select")
+    if (gameInfo.step === "init") return <WaitForInit gameInfo={gameInfo} />;
+    if (gameInfo.step === "select")
       return (
         <SelectPlayerDeck
           gameInfo={gameInfo}
@@ -70,7 +73,7 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
           submittedCard={submittedCard}
         />
       );
-    if (gameMode === "vote")
+    if (gameInfo.step === "vote")
       return (
         <VotePlayerDeck
           gameInfo={gameInfo}
@@ -81,7 +84,7 @@ export default function PlayerViews({ gameInfo, gameMode, userId }) {
           submittedCard={submittedCard}
         />
       );
-    if (gameMode === "showPoints")
+    if (gameInfo.step === "evaluate")
       return <PointsDisplay gameInfo={gameInfo} userId={userId} />;
   };
   return <div>{selectGameView()}</div>;

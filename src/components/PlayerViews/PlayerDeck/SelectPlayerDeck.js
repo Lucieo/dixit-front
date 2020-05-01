@@ -32,7 +32,7 @@ export default function SelectPlayerDeck({
           turn={gameInfo.turn}
           turnDeck={turnDeck}
           turnVotes={turnVotes}
-          userCards={cards.filter((card) => card === chosenCard)}
+          userCards={cards.filter((card) => card.id !== chosenCard.id)}
         />
       ) : (
         <ChoiceDeck

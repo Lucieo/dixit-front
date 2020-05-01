@@ -24,6 +24,7 @@ export const GET_GAME_INFO = gql`
     getGameInfo(gameId: $gameId) {
       id
       status
+      step
       turn
       players {
         id

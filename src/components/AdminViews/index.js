@@ -8,9 +8,10 @@ import { GAME_ACTION } from "graphQL/subscriptions";
 import { LAUNCH_GAME_STEP } from "graphQL/mutations";
 import PointsDisplay from "components/PlayerViews/PointsDisplay";
 import { ReactComponent as Badge } from "images/policeman.svg";
+import Ding from "sounds/ding.mp3";
 import "./Admin.css";
 
-export default function AdminViews({ gameInfo, gameMode, userId }) {
+export default function AdminViews({ gameInfo, userId }) {
   const gameId = gameInfo.id;
   const [turnCards, setTurnCards] = useState(gameInfo.turnDeck);
   const [turnVotes, setTurnVotes] = useState(gameInfo.turnVotes);
@@ -42,9 +43,9 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
   }, [gameInfo.turnDeck]);
 
   const selectAdminControls = () => {
-    if (gameMode === "init")
+    if (gameInfo.step === "init")
       return <InitGame gameInfo={gameInfo} userId={userId} />;
-    if (gameMode === "select")
+    if (gameInfo.step === "select")
       return (
         <SelectPhase
           gameId={gameInfo.id}
@@ -54,7 +55,7 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
           userId={userId}
         />
       );
-    if (gameMode === "vote")
+    if (gameInfo.step === "vote")
       return (
         <VotePhase
           currentWord={gameInfo.currentWord}
@@ -66,10 +67,11 @@ export default function AdminViews({ gameInfo, gameMode, userId }) {
         />
       );
 
-    if (gameMode === "showPoints")
+    if (gameInfo.step === "evaluate")
       return (
         <>
           <div className="admincontrols__box">
+            <audio src={Ding} autoPlay />
             <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
             <p>
               Une fois que tout le monde a vu ses points vous pourrez passer la

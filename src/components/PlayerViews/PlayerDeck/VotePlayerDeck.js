@@ -19,9 +19,8 @@ export default function VotePlayerDeck({
     submittedCard && submittedCard.card
   );
   const [submitted, setSubmitted] = useState();
-  console.log("turnDeck", turnDeck);
-  console.log(submittedCard, "submittedCard");
-  console.log(submittedCard, "submittedCard");
+  const ownCard = turnDeck.find((card) => card.owner === userId).card;
+  console.log(ownCard, "OWN CARD");
   return (
     <>
       {submittedCard || submitted ? (
@@ -33,7 +32,7 @@ export default function VotePlayerDeck({
           turn={gameInfo.turn}
           turnDeck={turnDeck}
           turnVotes={turnVotes}
-          userCards={userCards}
+          userCards={userCards.filter((card) => card !== ownCard.id)}
         />
       ) : (
         <ChoiceDeck
@@ -43,7 +42,7 @@ export default function VotePlayerDeck({
           chosenCard={chosenCard}
           setSubmitted={setSubmitted}
           actionType={"voteForCard"}
-          ownCard={turnDeck.find((card) => card.owner === userId).card}
+          ownCard={ownCard}
           currentWord={gameInfo.currentWord}
           turnMaster={players[turn]}
         />
