@@ -8,7 +8,6 @@ import { GAME_ACTION } from "graphQL/subscriptions";
 import { LAUNCH_GAME_STEP } from "graphQL/mutations";
 import PointsDisplay from "components/PlayerViews/PointsDisplay";
 import { ReactComponent as Badge } from "images/policeman.svg";
-import Ding from "sounds/ding.mp3";
 import "./Admin.css";
 
 export default function AdminViews({ gameInfo, userId }) {
@@ -64,6 +63,7 @@ export default function AdminViews({ gameInfo, userId }) {
           votes={turnVotes}
           userId={userId}
           gameId={gameInfo.id}
+          turn={gameInfo.turn}
         />
       );
 
@@ -71,7 +71,6 @@ export default function AdminViews({ gameInfo, userId }) {
       return (
         <>
           <div className="admincontrols__box">
-            <audio src={Ding} autoPlay />
             <p className="admincontrols__title">NOUVELLE ACTION DISPONIBLE</p>
             <p>
               Une fois que tout le monde a vu ses points vous pourrez passer la

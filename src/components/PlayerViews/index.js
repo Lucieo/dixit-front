@@ -10,14 +10,6 @@ import { GET_DECK } from "graphQL/queries";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function PlayerViews({ gameInfo, userId }) {
-  const findSubmittedCard = () => {
-    return gameInfo.step === "select"
-      ? gameInfo.turnDeck.find((el) => el.owner === userId)
-      : gameInfo.turnVotes.find((el) => el.owner === userId);
-  };
-  const [userCards, setUserCards] = useState([]);
-  const [submittedCard, setSubmittedCard] = useState(findSubmittedCard());
-  console.log("SUBMITTED CARD IS", submittedCard);
   const [turnDeck, setTurnDeck] = useState(gameInfo.turnDeck);
   const [turnVotes, setTurnVotes] = useState(gameInfo.turnVotes);
   const { dataSub, loadingSub } = useSubscription(GAME_ACTION, {
@@ -30,35 +22,11 @@ export default function PlayerViews({ gameInfo, userId }) {
       } else {
         setTurnVotes([...turnVotes, data.action]);
       }
-      if (data.action.owner === userId) {
-        setSubmittedCard(data.action.card);
-      }
     },
     onError(...error) {
       console.log(error);
     },
   });
-
-  const { loading } = useQuery(GET_DECK, {
-    variables: { gameId: gameInfo.id },
-    onCompleted({ getDeck }) {
-      setUserCards(getDeck.cards);
-      console.log(
-        "GETTING USER DECK-------------------------------------",
-        getDeck.cards
-      );
-    },
-    fetchPolicy: "network-only",
-    onError(...error) {
-      console.log(error);
-    },
-  });
-
-  useEffect(() => {
-    setSubmittedCard(findSubmittedCard());
-  }, [gameInfo]);
-
-  if (loading) return <Loading />;
 
   const selectGameView = () => {
     if (gameInfo.step === "init") return <WaitForInit gameInfo={gameInfo} />;
@@ -68,9 +36,6 @@ export default function PlayerViews({ gameInfo, userId }) {
           gameInfo={gameInfo}
           userId={userId}
           turnDeck={turnDeck}
-          turnVotes={turnVotes}
-          cards={userCards}
-          submittedCard={submittedCard}
         />
       );
     if (gameInfo.step === "vote")
@@ -78,10 +43,7 @@ export default function PlayerViews({ gameInfo, userId }) {
         <VotePlayerDeck
           gameInfo={gameInfo}
           userId={userId}
-          turnDeck={turnDeck}
           turnVotes={turnVotes}
-          userCards={userCards}
-          submittedCard={submittedCard}
         />
       );
     if (gameInfo.step === "evaluate")

@@ -16,8 +16,6 @@ const GameOver = ({ gameInfo }) => {
   const winners = podium.filter((player) => player.points >= winnerPoints);
   const winnersIds = winners.map((el) => el.player.id);
 
-  console.log(winners[0]);
-
   return (
     <div className="center">
       <h3>GAME OVER BITCHES</h3>
@@ -64,7 +62,6 @@ const Exaequo = ({ winners }) => {
 };
 
 const SingleWinner = ({ winner }) => {
-  console.log(winner);
   return (
     <div>
       <h5>And the winner is {winner.player.name}!</h5>

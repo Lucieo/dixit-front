@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useQuery, useSubscription, useMutation } from "@apollo/react-hooks";
 import requireAuth from "components/requireAuth";
 import Loading from "components/Loading";
-import { GET_GAME_INFO, GET_USER_ID } from "graphQL/queries";
+import { GET_GAME_INFO, GET_USER_ID, GET_DECK } from "graphQL/queries";
 import { LEAVE_GAME } from "graphQL/mutations";
 import { GAME_UPDATE } from "graphQL/subscriptions";
 import NothingToSee from "components/NothingToSee";
@@ -52,6 +52,11 @@ const Game = (props) => {
     onError(...error) {
       console.log(error);
     },
+    refetchQueries: [
+      {
+        query: GET_DECK,
+      },
+    ],
   });
 
   useEffect(() => {

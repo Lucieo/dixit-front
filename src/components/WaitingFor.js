@@ -28,8 +28,8 @@ export default function WaitingFor({ players, received, turn }) {
         <p>On attend encore :</p>
       ) : (
         <p>
-          Tout le monde a envoyé sa réponse, attendez que le maître du tour
-          passe à la prochaine étape.
+          Tout le monde a envoyé sa réponse, le maître du tour doit passer à la
+          prochaine étape.
         </p>
       )}
       <div style={styles.listStyle}>

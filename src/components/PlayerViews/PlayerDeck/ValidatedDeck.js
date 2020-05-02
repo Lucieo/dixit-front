@@ -46,11 +46,13 @@ export default function ValidatedDeck({
       <hr />
       <h5>Profitez-en pour regarder vos cartes</h5>
       <p className="center">Vous en recevrez une nouvelle au prochain tour</p>
-      {userCards
-        .filter((card) => card !== chosenCard)
-        .map((card, idx) => (
-          <Card key={idx} card={card} />
-        ))}
+      <div className="row">
+        {userCards
+          .filter((card) => card !== chosenCard)
+          .map((card, idx) => (
+            <Card key={idx} card={card} />
+          ))}
+      </div>
     </div>
   );
 }
